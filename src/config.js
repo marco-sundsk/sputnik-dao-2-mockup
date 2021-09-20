@@ -4,6 +4,7 @@ function getConfig(env) {
   switch (env) {
 
     case 'production':
+    case 'development':
     case 'mainnet':
       return {
         networkId: 'mainnet',
@@ -15,7 +16,6 @@ function getConfig(env) {
         pk: '2gtDEwdLuUBawzFLAnCS9gUso3Ph76bRzMpVrtb66f3J',
         tokenFactory: 'tkn.near',
       }
-    case 'development':
     case 'testnet':
       return {
         networkId: 'testnet',

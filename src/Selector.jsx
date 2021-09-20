@@ -42,7 +42,7 @@ async function accountExists(accountId) {
 
 const NewDao = (props) => {
   const [showSpinner, setShowSpinner] = useState(false);
-  const [showNewDao, setShowNewDao] = useState(true);
+  const [showNewDao, setShowNewDao] = useState(false);
 
 
   const [daoName, setDaoName] = useState({
@@ -69,7 +69,7 @@ const NewDao = (props) => {
 
 
   const toggleNewDaoModal = () => {
-    setShowNewDao(!showNewDao);
+    setShowNewDao(false);
   }
 
 
@@ -486,7 +486,7 @@ const DaoInfo = (props) => {
             <div>
               <hr/>
               <MDBCol>
-                {daoPolicy && daoPolicy.roles[1] ? daoPolicy.roles[1].kind.Group.map((item, key) => <div className="text-right" key={key}>{item}</div>): null}
+                {daoPolicy && daoPolicy.roles[0] ? daoPolicy.roles[0].kind.Group.map((item, key) => <div className="text-right" key={key}>{item}</div>): null}
               </MDBCol>
             </div>
             : null}
@@ -508,15 +508,17 @@ const Selector = (props) => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
-      window.factoryContract.get_dao_list()
-        .then(r => {
-          setDaoList(r);
-          setShowLoading(false);
-        }).catch((e) => {
-        setShowLoading(false);
-        console.log(e);
-        mutationCtx.toastError(e);
-      })
+      setDaoList(['dao.ref-dev-team.near']);
+      setShowLoading(false);
+      // window.factoryContract.get_dao_list()
+      //   .then(r => {
+      //     setDaoList(['dao.ref-dev-team.near']);
+      //     setShowLoading(false);
+      //   }).catch((e) => {
+      //   setShowLoading(false);
+      //   console.log(e);
+      //   mutationCtx.toastError(e);
+      // })
     },
     []
   )
@@ -538,7 +540,7 @@ const Selector = (props) => {
   }
 
   const toggleNewDao = () => {
-    setShowNewDaoModal(!showNewDaoModal);
+    setShowNewDaoModal(false);
   }
 
   /*
@@ -562,9 +564,9 @@ const Selector = (props) => {
         <MDBCardHeader className="text-center white-text" titleClass="w-100" tag="p">
           Please select or create DAO
           <hr color="white"/>
-          <MDBBtn color="grey" disabled={!window.walletConnection.getAccountId()} onClick={toggleNewDao}
-                  className="">CREATE NEW DAO</MDBBtn>
-          <MDBBox className="white-text text-center">Attention! Required minimum 5 NEAR for the storage.</MDBBox>
+          <MDBBtn color="grey" disabled={true} onClick={toggleNewDao}
+                  className="">UNABLE TO CREATE DAO</MDBBtn>
+          <MDBBox className="white-text text-center">Attention! This specific version unable to create new DAO.</MDBBox>
         </MDBCardHeader>
         {showLoading ? <Loading/> : null}
         <MDBCardBody className="text-center">
